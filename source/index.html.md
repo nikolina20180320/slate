@@ -4,7 +4,6 @@ title: API Reference
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - ruby
-  - python
   - javascript
 
 toc_footers:
@@ -25,80 +24,62 @@ meta:
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+This is API documentation for second homework
 
 # Authentication
 
 > To authorize, use this code:
 
 ```ruby
-require 'kittn'
+require 'cards'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+api = Cards::APIClient.authorize!('meowmeowmeow')
 ```
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+curl "http::/localhost:8000" \
+  -H "Authorization:Bearer meowmeowmeow"
 ```
 
 ```javascript
-const kittn = require('kittn');
+const axios = require('axios');
 
-let api = kittn.authorize('meowmeowmeow');
+axios.defaults.headers.common['Authorization'] = 'Bearer meowmeowmeow';
 ```
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+To access certain endpoints, you will need an API key. You can get the API key either by registering a new account or logging into your current account
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+`Authorization: Bearer meowmeowmeow`
 
 <aside class="notice">
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+# Cards
 
-## Get All Kittens
+## Get All Cards
 
 ```ruby
-require 'kittn'
+require 'cards'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+api = Cards::APIClient
+api.cards.get
 ```
 
 ```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+curl "http://localhost:8000/api/cards" \
+  -H "Authorization:Bearer meowmeowmeow"
 ```
 
 ```javascript
-const kittn = require('kittn');
+const axios = require('axios');
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+axios.defaults.headers.common['Authorization'] = 'Bearer meowmeowmeow';
+let cards = axios.get('http://localhost:8000/api/cards')
 ```
 
 > The above command returns JSON structured like this:
@@ -107,139 +88,304 @@ let kittens = api.kittens.get();
 [
   {
     "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+    "cardNumber": "93203299339",
+    "expirationDate": "2023-04-02",
+    "account": {
+      "id":1,
+      "accountNumber":"1234153245234522",
+      "balance":4923432
+    },
+    "manufacturer":{
+      "id":1,
+      "legalName":"Visa LLD",
+      "name":"VISA",
+      "location":"New York"
+    }
   },
   {
     "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "cardNumber": "325253235",
+    "expirationDate": "2023-05-02",
+     "account": {
+      "id":2,
+      "accountNumber":"1234768234522",
+      "balance":338807
+    },
+    "manufacturer":{
+      "id":2,
+      "legalName":"MasterCard LLD",
+      "name":"MasterCard",
+      "location":"New York"
+    }
   }
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves all cards.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET http://localhost:8000/api/cards`
 
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
+## Get a Specific Card
 
 ```ruby
-require 'kittn'
+require 'cards'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+api = Cards::APIClient
+api.cards.get(1)
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
+curl "http://localhost:8000/api/cards/1" \
+  -H "Authorization:Bearer meowmeowmeow"
 ```
 
 ```javascript
-const kittn = require('kittn');
+const axios = require('axios');
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+axios.defaults.headers.common['Authorization'] = 'Bearer meowmeowmeow';
+let card = axios.get('http://localhost:8000/api/cards/1')
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+ {
+    "id": 1,
+    "cardNumber": "93203299339",
+    "expirationDate": "2023-04-02",
+    "account": {
+      "id":1,
+      "accountNumber":"1234153245234522",
+      "balance":4923432
+    },
+    "manufacturer":{
+      "id":1,
+      "legalName":"Visa LLD",
+      "name":"VISA",
+      "location":"New York"
+    }
+  }
 ```
 
-This endpoint retrieves a specific kitten.
+This endpoint retrieves a specific card.
 
 <aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET http://localhost:8000/api/cards/<ID>`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+ID | The ID of the card to retrieve
 
-## Delete a Specific Kitten
+
+## Create new Card
 
 ```ruby
-require 'kittn'
+require 'cards'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
+api = Cards::APIClient.authorize!('meowmeowmeow')
+api.cards.create({
+  "card_number": "13413153",
+  "expiration_date": "2023-04-02",
+  "account_id":2,
+  "manufacturer_id" :1
+})
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
+curl "http://example.com/api/cards" \
+  -X POST \
+  -H "Authorization:Bearer meowmeowmeow"
+
+  "{
+  \"card_number\": \"13413153\",
+  \"expiration_date\": \"2023-04-02\",
+  \"account_id\":1,
+  \"manufacturer_id\" :1
+}"
 ```
 
 ```javascript
-const kittn = require('kittn');
+const axios = require('axios');
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+axios.defaults.headers.common['Authorization'] = 'Bearer meowmeowmeow';
+axios.post('http://localhost:8000/api/cards',{
+  "card_number": "13413153",
+  "expiration_date": "2023-04-02",
+  "account_id":2,
+  "manufacturer_id" :1
+})
 ```
+
 
 > The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
+ {
+    "id": 3,
+    "cardNumber": "13413153",
+    "expirationDate": "2023-04-02",
+    "account": {
+      "id":1,
+      "accountNumber":"1234153245234522",
+      "balance":4923432
+    },
+    "manufacturer":{
+      "id":1,
+      "legalName":"Visa LLD",
+      "name":"VISA",
+      "location":"New York"
+    }
+  }
 ```
 
-This endpoint deletes a specific kitten.
+
+
+This endpoint deletes a specific card.
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`POST http://localhost:8000/api/cards`
+
+### Requst body
+
+Parameter         | Type        
+---------------   | ----------- 
+card_number       | String      
+expiration_date   | Date     
+account_id        | Integer     
+manufacturer_id   | Integer     
+
+
+## Create update Card
+
+```ruby
+require 'cards'
+
+api = Cards::APIClient.authorize!('meowmeowmeow')
+api.cards.update(3,{
+  "card_number": "13413153",
+  "expiration_date": "2023-04-02",
+  "account_id":2,
+  "manufacturer_id" :1
+})
+```
+
+```shell
+curl "http://example.com/api/cards/3" \
+  -X PUT \
+  -H "Authorization:Bearer meowmeowmeow"
+
+  "{
+  \"card_number\": \"13413153\",
+  \"expiration_date\": \"2023-04-02\",
+  \"account_id\":1,
+  \"manufacturer_id\" :1
+}"
+```
+
+```javascript
+const axios = require('axios');
+
+axios.defaults.headers.common['Authorization'] = 'Bearer meowmeowmeow';
+axios.post('http://localhost:8000/api/cards/3',{
+  "card_number": "13413153",
+  "expiration_date": "2023-04-02",
+  "account_id":2,
+  "manufacturer_id" :1
+})
+```
+
+
+> The above command returns JSON structured like this:
+
+```json
+ {
+    "id": 3,
+    "cardNumber": "13413153",
+    "expirationDate": "2023-04-02",
+    "account": {
+      "id":1,
+      "accountNumber":"1234153245234522",
+      "balance":4923432
+    },
+    "manufacturer":{
+      "id":1,
+      "legalName":"Visa LLD",
+      "name":"VISA",
+      "location":"New York"
+    }
+  }
+```
+
+
+
+This endpoint deletes a specific card.
+
+### HTTP Request
+
+`PUT http://localhost:8000/api/cards/3`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to delete
+ID | The ID of the card to delete
+
+
+### Requst body
+
+Parameter         | Type        
+---------------   | ----------- 
+card_number       | String      
+expiration_date   | Date     
+account_id        | Integer     
+manufacturer_id   | Integer     
+
+
+
+## Delete a Specific Card
+
+```ruby
+require 'cards'
+
+api = Cards::APIClient.authorize!('meowmeowmeow')
+api.cards.delete(1)
+```
+
+```shell
+curl "http://example.com/api/cards/1" \
+  -X DELETE \
+  -H "Authorization:Bearer meowmeowmeow"
+```
+
+```javascript
+const axios = require('axios');
+
+axios.defaults.headers.common['Authorization'] = 'Bearer meowmeowmeow';
+axios.delete('http://localhost:8000/api/cards/1')
+```
+
+
+> The above command returns no response
+
+
+
+This endpoint deletes a specific card.
+
+### HTTP Request
+
+`DELETE http://localhost:8000/api/cards/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the card to delete
 
